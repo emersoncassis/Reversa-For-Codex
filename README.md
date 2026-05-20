@@ -40,3 +40,9 @@ https://reversa-for-codex.fly.dev/terms
 ```
 
 For OpenAI review, connect the HTTPS MCP endpoint in ChatGPT Developer Mode, run the review prompts, then submit from the OpenAI Platform dashboard.
+
+
+Principal Project: https://sandeco.github.io/reversa/
+Reference: https://arxiv.org/abs/2605.18684
+
+
