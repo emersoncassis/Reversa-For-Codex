@@ -5,8 +5,10 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "start": "tsx src/server.ts",
+    "build": "tsc",
+    "start:prod": "node dist/server.js",
     "check": "tsc --noEmit",
-    "validate": "npm run check"
+    "validate": "npm run check && npm run build"
   },
   "dependencies": {
     "@modelcontextprotocol/ext-apps": "^1.7.2",

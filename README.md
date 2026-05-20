@@ -31,4 +31,12 @@ Local endpoint:
 http://localhost:8787/mcp
 ```
 
-For OpenAI review, deploy the server behind HTTPS, publish privacy and terms pages, update `reversa-app-sdk/chatgpt-app-submission.json`, and submit from the OpenAI Platform dashboard.
+Production endpoints after deploying the root Render Blueprint:
+
+```text
+https://reversa-app-sdk.onrender.com/mcp
+https://reversa-app-sdk.onrender.com/privacy
+https://reversa-app-sdk.onrender.com/terms
+```
+
+For OpenAI review, connect the HTTPS MCP endpoint in ChatGPT Developer Mode, run the review prompts, then submit from the OpenAI Platform dashboard.

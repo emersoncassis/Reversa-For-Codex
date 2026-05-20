@@ -2,11 +2,10 @@
 
 ## Before Deployment
 
-- Replace `YOUR_DOMAIN.example` in `submission/app-submission-draft.json`.
-- Host the MCP server at a public HTTPS URL.
-- Set `PUBLIC_ORIGIN` to the public origin before starting the server.
-- Confirm `/mcp` is reachable outside the local network.
-- Publish privacy policy and terms pages.
+- Deploy the Render Blueprint from the repository root `render.yaml`.
+- Confirm `https://reversa-app-sdk.onrender.com/mcp` is reachable outside the local network.
+- Confirm `https://reversa-app-sdk.onrender.com/privacy` and `https://reversa-app-sdk.onrender.com/terms` render successfully.
+- Confirm `PUBLIC_ORIGIN` is `https://reversa-app-sdk.onrender.com`.
 
 ## Tool Safety
 

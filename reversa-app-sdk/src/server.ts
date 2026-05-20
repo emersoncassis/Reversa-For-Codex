@@ -16,6 +16,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, "..");
 const WIDGET_URI = "ui://widget/reversa-dashboard-v1.html";
 const WIDGET_HTML = readFileSync(path.join(ROOT_DIR, "public", "widget.html"), "utf8");
+const PRIVACY_MARKDOWN = readFileSync(path.join(ROOT_DIR, "submission", "privacy.md"), "utf8");
+const TERMS_MARKDOWN = readFileSync(path.join(ROOT_DIR, "submission", "terms.md"), "utf8");
 const PUBLIC_DIR = path.join(ROOT_DIR, "public");
 const PORT = Number(process.env.PORT ?? "8787");
 const PUBLIC_ORIGIN = process.env.PUBLIC_ORIGIN ?? "http://localhost:" + PORT;
@@ -63,6 +65,53 @@ const phases: ReversaPhase[] = [
 
 const supportedGoals = ["discovery", "greenfield", "forward", "migration", "docs"] as const;
 const supportedEngines = ["codex", "claude-code", "cursor", "gemini-cli", "generic"] as const;
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function renderMarkdownPage(title: string, markdown: string): string {
+  const body = markdown
+    .split(/\r?\n\r?\n/)
+    .map((block) => {
+      const trimmed = block.trim();
+      if (!trimmed) {
+        return "";
+      }
+
+      if (trimmed.startsWith("# ")) {
+        return "<h1>" + escapeHtml(trimmed.slice(2)) + "</h1>";
+      }
+
+      return "<p>" + escapeHtml(trimmed).replace(/\r?\n/g, "<br>") + "</p>";
+    })
+    .join("\n");
+
+  return [
+    "<!doctype html>",
+    '<html lang="en">',
+    "<head>",
+    '<meta charset="utf-8">',
+    '<meta name="viewport" content="width=device-width, initial-scale=1">',
+    "<title>" + escapeHtml(title) + "</title>",
+    "<style>",
+    "body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;margin:0;background:#f7f5ef;color:#161616}",
+    "main{max-width:760px;margin:0 auto;padding:56px 24px}",
+    "h1{font-size:32px;line-height:1.2;margin:0 0 24px}",
+    "p{font-size:16px;margin:0 0 18px}",
+    "a{color:#0b6bcb}",
+    "</style>",
+    "</head>",
+    "<body><main>",
+    body,
+    "</main></body></html>",
+  ].join("");
+}
 
 function createAppServer(): McpServer {
   const server = new McpServer({
@@ -310,6 +359,20 @@ createServer(async (req, res) => {
     res
       .writeHead(200, { "content-type": "application/json" })
       .end(JSON.stringify({ name: "reversa", mcp: MCP_PATH, status: "ok" }));
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/privacy") {
+    res
+      .writeHead(200, { "content-type": "text/html; charset=utf-8" })
+      .end(renderMarkdownPage("Reversa App Privacy Policy", PRIVACY_MARKDOWN));
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/terms") {
+    res
+      .writeHead(200, { "content-type": "text/html; charset=utf-8" })
+      .end(renderMarkdownPage("Reversa App Terms", TERMS_MARKDOWN));
     return;
   }
 

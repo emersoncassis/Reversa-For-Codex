@@ -26,10 +26,25 @@ Local MCP endpoint:
 http://localhost:8787/mcp
 ```
 
-For public review, deploy this server behind HTTPS and set:
+## Render Deployment
+
+This repository includes a root `render.yaml` Blueprint that deploys `reversa-app-sdk` as a Render web service.
+
+Render settings:
+
+- Service name: `reversa-app-sdk`
+- Public origin: `https://reversa-app-sdk.onrender.com`
+- Build command: `npm ci && npm run build`
+- Start command: `npm run start:prod`
+- Health check: `/`
+- MCP endpoint: `https://reversa-app-sdk.onrender.com/mcp`
+- Privacy policy: `https://reversa-app-sdk.onrender.com/privacy`
+- Terms: `https://reversa-app-sdk.onrender.com/terms`
+
+Runtime environment:
 
 ```powershell
-$env:PUBLIC_ORIGIN = "https://your-public-domain.example"
+$env:PUBLIC_ORIGIN = "https://reversa-app-sdk.onrender.com"
 ```
 
 ## Submission Notes
