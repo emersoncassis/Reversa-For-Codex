@@ -1,23 +1,29 @@
-app = "reversa-for-codex"
-primary_region = "gru"
+# fly.toml app configuration file generated for reversa-for-codex on 2026-05-20T03:42:59Z
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'reversa-for-codex'
+primary_region = 'gru'
 
 [build]
-  dockerfile = "Dockerfile"
+  dockerfile = 'Dockerfile'
 
 [env]
-  NODE_ENV = "production"
-  PORT = "8787"
-  PUBLIC_ORIGIN = "https://reversa-for-codex.fly.dev"
+  NODE_ENV = 'production'
+  PORT = '8787'
+  PUBLIC_ORIGIN = 'https://reversa-for-codex.fly.dev'
 
 [http_service]
   internal_port = 8787
   force_https = true
-  auto_stop_machines = "stop"
+  auto_stop_machines = 'stop'
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
+  processes = ['app']
 
 [[vm]]
-  memory = "256mb"
-  cpu_kind = "shared"
+  memory = '256mb'
+  cpu_kind = 'shared'
   cpus = 1
+  memory_mb = 256
