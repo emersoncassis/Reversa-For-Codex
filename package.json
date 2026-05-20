@@ -2,7 +2,6 @@
   "name": "reversa-for-codex",
   "private": true,
   "scripts": {
-    "postinstall": "npm ci --prefix reversa-app-sdk && npm run build --prefix reversa-app-sdk",
     "build": "npm ci --prefix reversa-app-sdk && npm run build --prefix reversa-app-sdk",
     "start": "npm run start:prod --prefix reversa-app-sdk",
     "validate": "npm run validate --prefix reversa-app-sdk"
