@@ -1,0 +1,48 @@
+{
+  "name": "Reversa",
+  "category": "Coding",
+  "shortDescription": "Plan Reversa adoption and generate install checklists for legacy reverse engineering.",
+  "longDescription": "Reversa helps developers turn legacy systems into executable, traceable specifications for AI coding agents. This ChatGPT App provides workflow guidance, adoption planning, and review-safe install checklists before users run the Reversa CLI in their own development environment.",
+  "developerName": "sandeco",
+  "websiteUrl": "https://sandeco.github.io/reversa/",
+  "repositoryUrl": "https://github.com/sandeco/reversa",
+  "privacyPolicyUrl": "https://YOUR_DOMAIN.example/privacy",
+  "termsOfServiceUrl": "https://YOUR_DOMAIN.example/terms",
+  "mcpServerUrl": "https://YOUR_DOMAIN.example/mcp",
+  "authentication": "none",
+  "tools": [
+    {
+      "name": "show_reversa_overview",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    {
+      "name": "plan_reversa_adoption",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    },
+    {
+      "name": "generate_reversa_install_checklist",
+      "readOnlyHint": true,
+      "destructiveHint": false,
+      "openWorldHint": false
+    }
+  ],
+  "testCases": [
+    {
+      "prompt": "Show me what Reversa does.",
+      "expectedBehavior": "The app calls show_reversa_overview and returns the five workflow phases without asking for repository access."
+    },
+    {
+      "prompt": "Plan Reversa adoption for a Node.js SaaS legacy project with medium risk.",
+      "expectedBehavior": "The app calls plan_reversa_adoption and returns a sequence, safeguards, expected artifacts, and the appropriate entry command."
+    },
+    {
+      "prompt": "Create a Codex install checklist for a TypeScript project with a dirty git tree.",
+      "expectedBehavior": "The app calls generate_reversa_install_checklist and warns the user to resolve or document dirty repository state before install."
+    }
+  ],
+  "releaseNotes": "Initial review-safe Reversa guidance app with read-only planning tools and dashboard widget."
+}

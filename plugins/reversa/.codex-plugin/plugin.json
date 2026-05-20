@@ -1,0 +1,48 @@
+{
+  "name": "reversa",
+  "version": "1.2.44",
+  "description": "Transform legacy systems into executable specifications for AI coding agents.",
+  "author": {
+    "name": "sandeco",
+    "url": "https://github.com/sandeco"
+  },
+  "homepage": "https://sandeco.github.io/reversa/",
+  "repository": "https://github.com/sandeco/reversa",
+  "license": "MIT",
+  "keywords": [
+    "legacy",
+    "reverse-engineering",
+    "specifications",
+    "ai",
+    "codex",
+    "agents"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Reversa",
+    "shortDescription": "Reverse-engineer legacy systems into executable specs.",
+    "longDescription": "Reversa coordinates specialized AI agents to inspect existing systems, extract business rules, architecture, flows, data models, and UI knowledge, then generate traceable specifications for future coding work.",
+    "developerName": "sandeco",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "websiteURL": "https://sandeco.github.io/reversa/",
+    "privacyPolicyURL": "https://github.com/sandeco/reversa",
+    "termsOfServiceURL": "https://github.com/sandeco/reversa/blob/main/LICENSE",
+    "defaultPrompt": [
+      "Use Reversa to analyze this legacy project.",
+      "Resume the current Reversa workflow.",
+      "Generate SDD specs from this codebase."
+    ],
+    "brandColor": "#F97316",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/logo.png",
+    "background": "./assets/background.png",
+    "screenshots": [
+      "./assets/background.png"
+    ]
+  }
+}

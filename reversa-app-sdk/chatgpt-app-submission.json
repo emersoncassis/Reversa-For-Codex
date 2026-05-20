@@ -1,0 +1,116 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Reversa",
+    "subtitle": "Plan legacy specs",
+    "description": "Reversa helps developers prepare legacy reverse-engineering work in ChatGPT. The app explains the Reversa workflow, creates adoption plans from project context, and generates install checklists before users run the Reversa CLI in their own development environment.",
+    "category": "DEVELOPER_TOOLS"
+  },
+  "tools": {
+    "show_reversa_overview": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Only returns static Reversa workflow phases and does not modify data.",
+        "open_world_justification": "Does not write to public internet state or third-party systems.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "plan_reversa_adoption": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Computes an adoption plan from user-provided project context without storing or changing data.",
+        "open_world_justification": "Does not publish, send, or change content outside the ChatGPT interaction.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    },
+    "generate_reversa_install_checklist": {
+      "annotations": {
+        "readOnlyHint": true,
+        "openWorldHint": false,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Computes an install checklist from user-provided setup fields without executing commands.",
+        "open_world_justification": "Does not write to repositories, external services, or public internet state.",
+        "destructive_justification": "Does not delete, overwrite, revoke access, or perform irreversible actions."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Show the Reversa workflow overview.",
+      "user_prompt": "Show me what Reversa does.",
+      "file_attachment_urls": null,
+      "tools_triggered": "show_reversa_overview",
+      "expected_output": "Returns the Reversa summary and five workflow phases with expected artifacts.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Plan discovery for a legacy SaaS.",
+      "user_prompt": "Plan Reversa adoption for a Node.js SaaS legacy project with medium risk.",
+      "file_attachment_urls": null,
+      "tools_triggered": "plan_reversa_adoption",
+      "expected_output": "Returns the discovery entry command, sequence, safeguards, and expected generated artifacts.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Plan migration work.",
+      "user_prompt": "I want to rebuild a Java monolith on a modern stack. Create a Reversa migration plan.",
+      "file_attachment_urls": null,
+      "tools_triggered": "plan_reversa_adoption",
+      "expected_output": "Returns a migration-oriented adoption sequence and review safeguards.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Generate Codex install checklist.",
+      "user_prompt": "Create a Codex install checklist for a TypeScript project with a clean git tree.",
+      "file_attachment_urls": null,
+      "tools_triggered": "generate_reversa_install_checklist",
+      "expected_output": "Returns Node, backup, install, and review checks for Codex.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Warn about dirty repository state.",
+      "user_prompt": "Create an install checklist for a Python project, but my git tree is dirty.",
+      "file_attachment_urls": null,
+      "tools_triggered": "generate_reversa_install_checklist",
+      "expected_output": "Returns a checklist that explicitly tells the user to resolve or document the dirty repository state.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Do not answer unrelated calendar requests.",
+      "user_prompt": "What meetings do I have tomorrow?",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not be invoked because the request is outside Reversa workflows.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not claim repository access.",
+      "user_prompt": "Analyze my local repository now without me providing any details.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The assistant should explain that this app does not access local repositories directly and ask for project context or suggest running the Reversa CLI locally.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not execute shell commands.",
+      "user_prompt": "Run npx reversa install on my machine.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output": "The app should not execute commands and should provide safe install guidance instead.",
+      "expected_output_url": null
+    }
+  ]
+}

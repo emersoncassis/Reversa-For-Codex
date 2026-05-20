@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Reversa</title>
+    <style>
+      :root {
+        color: #f8fafc;
+        background: #050505;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background:
+          linear-gradient(90deg, rgba(5, 5, 5, 0.82), rgba(5, 5, 5, 0.58)),
+          url("/assets/background.png") center / cover no-repeat,
+          #050505;
+      }
+
+      main {
+        display: grid;
+        gap: 18px;
+        min-height: 100vh;
+        padding: 18px;
+        align-content: start;
+      }
+
+      header {
+        display: grid;
+        grid-template-columns: 72px minmax(0, 1fr);
+        gap: 14px;
+        align-items: center;
+      }
+
+      .logo {
+        width: 72px;
+        height: 72px;
+        object-fit: cover;
+        border: 1px solid rgba(245, 158, 11, 0.55);
+        background: #050505;
+      }
+
+      .eyebrow {
+        margin: 0 0 4px;
+        color: #f59e0b;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 26px;
+        line-height: 1.08;
+      }
+
+      .summary {
+        max-width: 720px;
+        margin: 0;
+        color: #d6d3d1;
+        line-height: 1.5;
+      }
+
+      .panel {
+        display: grid;
+        gap: 12px;
+        padding: 14px;
+        background: rgba(5, 5, 5, 0.76);
+        border: 1px solid rgba(245, 158, 11, 0.28);
+      }
+
+      .grid {
+        display: grid;
+        gap: 10px;
+      }
+
+      .item {
+        padding: 12px;
+        background: rgba(15, 23, 42, 0.72);
+        border: 1px solid rgba(148, 163, 184, 0.16);
+      }
+
+      .item strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #fbbf24;
+      }
+
+      .item span,
+      .item code {
+        color: #e7e5e4;
+        font-size: 13px;
+        line-height: 1.45;
+      }
+
+      button {
+        width: fit-content;
+        border: 1px solid rgba(245, 158, 11, 0.7);
+        padding: 10px 14px;
+        color: #050505;
+        background: #f59e0b;
+        font: inherit;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      @media (min-width: 760px) {
+        .grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <img class="logo" src="/assets/logo.png" alt="Reversa logo" />
+        <div>
+          <p class="eyebrow">Coding</p>
+          <h1 id="title">Reversa</h1>
+        </div>
+      </header>
+
+      <p id="summary" class="summary">
+        Call a Reversa tool to load workflow, planning, or installation data.
+      </p>
+
+      <section class="panel">
+        <div id="content" class="grid"></div>
+        <button id="overview" type="button">Load overview</button>
+      </section>
+    </main>
+
+    <script type="module">
+      const titleEl = document.querySelector("#title");
+      const summaryEl = document.querySelector("#summary");
+      const contentEl = document.querySelector("#content");
+      const overviewButton = document.querySelector("#overview");
+
+      let toolOutput = null;
+      let rpcId = 0;
+      const pendingRequests = new Map();
+
+      const asItems = (value) => {
+        if (!value) return [];
+        if (Array.isArray(value)) return value;
+        if (typeof value === "object") return Object.entries(value).map(([title, purpose]) => ({ title, purpose }));
+        return [{ title: "Result", purpose: String(value) }];
+      };
+
+      const renderItems = (items) => {
+        contentEl.replaceChildren(
+          ...items.map((item) => {
+            const node = document.createElement("article");
+            node.className = "item";
+            const title = item.title ?? item.id ?? item.command ?? "Step";
+            const text = item.purpose ?? item.output ?? item;
+            node.innerHTML =
+              "<strong></strong><span></span>" +
+              (item.output ? "<br><code></code>" : "");
+            node.querySelector("strong").textContent = String(title);
+            node.querySelector("span").textContent = String(text);
+            const code = node.querySelector("code");
+            if (code) code.textContent = item.output;
+            return node;
+          })
+        );
+      };
+
+      const render = () => {
+        titleEl.textContent = toolOutput?.name ?? toolOutput?.projectName ?? "Reversa";
+        summaryEl.textContent =
+          toolOutput?.summary ??
+          (toolOutput?.recommendedEntryCommand
+            ? "Recommended command: " + toolOutput.recommendedEntryCommand
+            : "Reversa turns legacy systems into executable specifications for AI coding agents.");
+
+        renderItems(
+          asItems(
+            toolOutput?.phases ??
+              toolOutput?.sequence ??
+              toolOutput?.preflight ??
+              []
+          )
+        );
+      };
+
+      const rpcNotify = (method, params) => {
+        window.parent.postMessage({ jsonrpc: "2.0", method, params }, "*");
+      };
+
+      const rpcRequest = (method, params) =>
+        new Promise((resolve, reject) => {
+          const id = ++rpcId;
+          pendingRequests.set(id, { resolve, reject });
+          window.parent.postMessage({ jsonrpc: "2.0", id, method, params }, "*");
+        });
+
+      window.addEventListener(
+        "message",
+        (event) => {
+          if (event.source !== window.parent) return;
+          const message = event.data;
+          if (!message || message.jsonrpc !== "2.0") return;
+
+          if (typeof message.id === "number") {
+            const pending = pendingRequests.get(message.id);
+            if (!pending) return;
+            pendingRequests.delete(message.id);
+            message.error ? pending.reject(message.error) : pending.resolve(message.result);
+            return;
+          }
+
+          if (message.method === "ui/notifications/tool-result") {
+            toolOutput = message.params?.structuredContent ?? null;
+            render();
+          }
+        },
+        { passive: true }
+      );
+
+      const bridgeReady = rpcRequest("ui/initialize", {
+        appInfo: { name: "reversa", version: "0.1.0" },
+        appCapabilities: {},
+        protocolVersion: "2026-01-26",
+      }).then(() => rpcNotify("ui/notifications/initialized", {}));
+
+      overviewButton.addEventListener("click", async () => {
+        await bridgeReady;
+        const response = await rpcRequest("tools/call", {
+          name: "show_reversa_overview",
+          arguments: {},
+        });
+        toolOutput = response?.structuredContent ?? toolOutput;
+        render();
+      });
+
+      render();
+    </script>
+  </body>
+</html>
