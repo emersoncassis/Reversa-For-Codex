@@ -26,31 +26,37 @@ Local MCP endpoint:
 http://localhost:8787/mcp
 ```
 
-## Render Deployment
+## Fly.io Deployment
 
-This repository includes a root `render.yaml` Blueprint that deploys `reversa-app-sdk` as a Render web service.
+This project includes `fly.toml` and `Dockerfile` for Fly.io deployment.
 
-Render settings:
+Fly settings:
 
 - Service name: `reversa-for-codex`
-- Public origin: `https://reversa-for-codex.onrender.com`
-- Build command: `npm ci && npm run build`
-- Start command: `npm run start:prod`
-- Health check: `/`
-- MCP endpoint: `https://reversa-for-codex.onrender.com/mcp`
-- Privacy policy: `https://reversa-for-codex.onrender.com/privacy`
-- Terms: `https://reversa-for-codex.onrender.com/terms`
+- Public origin: `https://reversa-for-codex.fly.dev`
+- Region: `gru`
+- Internal port: `8787`
+- Health route: `/`
+- MCP endpoint: `https://reversa-for-codex.fly.dev/mcp`
+- Privacy policy: `https://reversa-for-codex.fly.dev/privacy`
+- Terms: `https://reversa-for-codex.fly.dev/terms`
 
 Runtime environment:
 
 ```powershell
-$env:PUBLIC_ORIGIN = "https://reversa-for-codex.onrender.com"
+$env:PUBLIC_ORIGIN = "https://reversa-for-codex.fly.dev"
+```
+
+Deploy:
+
+```powershell
+flyctl deploy --config fly.toml --remote-only
 ```
 
 ## Submission Notes
 
 - Category: Coding
-- Public MCP URL: replace after deployment
+- Public MCP URL: `https://reversa-for-codex.fly.dev/mcp`
 - Authentication: none for this guidance-only MVP
 - Data handling: user-provided project metadata only
 - Destructive behavior: none

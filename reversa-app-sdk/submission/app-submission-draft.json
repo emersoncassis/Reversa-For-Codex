@@ -6,9 +6,9 @@
   "developerName": "sandeco",
   "websiteUrl": "https://sandeco.github.io/reversa/",
   "repositoryUrl": "https://github.com/sandeco/reversa",
-  "privacyPolicyUrl": "https://reversa-for-codex.onrender.com/privacy",
-  "termsOfServiceUrl": "https://reversa-for-codex.onrender.com/terms",
-  "mcpServerUrl": "https://reversa-for-codex.onrender.com/mcp",
+  "privacyPolicyUrl": "https://reversa-for-codex.fly.dev/privacy",
+  "termsOfServiceUrl": "https://reversa-for-codex.fly.dev/terms",
+  "mcpServerUrl": "https://reversa-for-codex.fly.dev/mcp",
   "authentication": "none",
   "tools": [
     {

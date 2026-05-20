@@ -2,10 +2,10 @@
 
 ## Before Deployment
 
-- Deploy the Render Blueprint from the repository root `render.yaml`.
-- Confirm `https://reversa-for-codex.onrender.com/mcp` is reachable outside the local network.
-- Confirm `https://reversa-for-codex.onrender.com/privacy` and `https://reversa-for-codex.onrender.com/terms` render successfully.
-- Confirm `PUBLIC_ORIGIN` is `https://reversa-for-codex.onrender.com`.
+- Deploy the Fly.io app from `reversa-app-sdk/fly.toml`.
+- Confirm `https://reversa-for-codex.fly.dev/mcp` is reachable outside the local network.
+- Confirm `https://reversa-for-codex.fly.dev/privacy` and `https://reversa-for-codex.fly.dev/terms` render successfully.
+- Confirm `PUBLIC_ORIGIN` is `https://reversa-for-codex.fly.dev`.
 
 ## Tool Safety
 
