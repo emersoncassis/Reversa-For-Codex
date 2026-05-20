@@ -32,19 +32,19 @@ This repository includes a root `render.yaml` Blueprint that deploys `reversa-ap
 
 Render settings:
 
-- Service name: `reversa-app-sdk`
-- Public origin: `https://reversa-app-sdk.onrender.com`
+- Service name: `reversa-for-codex`
+- Public origin: `https://reversa-for-codex.onrender.com`
 - Build command: `npm ci && npm run build`
 - Start command: `npm run start:prod`
 - Health check: `/`
-- MCP endpoint: `https://reversa-app-sdk.onrender.com/mcp`
-- Privacy policy: `https://reversa-app-sdk.onrender.com/privacy`
-- Terms: `https://reversa-app-sdk.onrender.com/terms`
+- MCP endpoint: `https://reversa-for-codex.onrender.com/mcp`
+- Privacy policy: `https://reversa-for-codex.onrender.com/privacy`
+- Terms: `https://reversa-for-codex.onrender.com/terms`
 
 Runtime environment:
 
 ```powershell
-$env:PUBLIC_ORIGIN = "https://reversa-app-sdk.onrender.com"
+$env:PUBLIC_ORIGIN = "https://reversa-for-codex.onrender.com"
 ```
 
 ## Submission Notes

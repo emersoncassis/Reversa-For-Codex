@@ -3,9 +3,9 @@
 ## Before Deployment
 
 - Deploy the Render Blueprint from the repository root `render.yaml`.
-- Confirm `https://reversa-app-sdk.onrender.com/mcp` is reachable outside the local network.
-- Confirm `https://reversa-app-sdk.onrender.com/privacy` and `https://reversa-app-sdk.onrender.com/terms` render successfully.
-- Confirm `PUBLIC_ORIGIN` is `https://reversa-app-sdk.onrender.com`.
+- Confirm `https://reversa-for-codex.onrender.com/mcp` is reachable outside the local network.
+- Confirm `https://reversa-for-codex.onrender.com/privacy` and `https://reversa-for-codex.onrender.com/terms` render successfully.
+- Confirm `PUBLIC_ORIGIN` is `https://reversa-for-codex.onrender.com`.
 
 ## Tool Safety
 

@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: reversa-app-sdk
+    name: reversa-for-codex
     runtime: node
     rootDir: reversa-app-sdk
     plan: free
@@ -11,4 +11,4 @@ services:
       - key: NODE_VERSION
         value: 22
       - key: PUBLIC_ORIGIN
-        value: https://reversa-app-sdk.onrender.com
+        value: https://reversa-for-codex.onrender.com
